@@ -1,0 +1,81 @@
+SAE-5
+
+Editor mode.
+▾
+▾
+▾
+▾
+▾
+▾
+▾
+\documentclass[a4paper,11pt]{report}
+
+%%%%%%%%%% PACKAGES ESSENTIELS %%%%%%%%%%
+\usepackage[utf8]{inputenc}   
+\usepackage[T1]{fontenc}      
+\usepackage[english]{babel}    
+\usepackage{graphicx}         
+\usepackage{lmodern}          
+\usepackage{float}
+\usepackage{xcolor}           
+\usepackage{tikz}   
+\usepackage{geometry}         
+\geometry{top=1.5cm,bottom=1.5cm,left=2cm,right=2cm}
+\usepackage{caption}
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+\usepackage{tabularx}
+
+%%%%%%%%%% Espacemente %%%%%%%%%%
+
+\usepackage{titlesec}
+\titlespacing*{\chapter}{0pt}{-5pt}{5pt}
+\titlespacing*{\section}{0pt}{5pt}{2pt}
+\titlespacing*{\subsection}{0pt}{4pt}{2pt}
+\titlespacing*{\subsubsection}{0pt}{3pt}{1pt}
+
+
+\setlength{\parskip}{0.3em}
+\setlength{\parindent}{1em}
+
+%%%%%%%%%% DÉBUT DU DOCUMENT %%%%%%%%%%
+\usepackage{enumitem}
+\setlist{nosep,left=0pt}
+\begin{document}
+
+%%%%%%%%%% PAGE DE GARDE %%%%%%%%%%
+\begin{titlepage}
+    \centering
+    \rule{\textwidth}{1pt}\par
+    \vspace{0.3cm}
+    {\large \textsc{I.U.T. A, Computer Science Department, S5}\par}
+    \vspace{2cm}
+    {\Huge\bfseries S5.B.01 Development of an IT Infrastructure\par}
+    \vspace{1cm}
+    \includegraphics[width=0.3\textwidth]{logo-UT-site.png}\par
+    \vspace{2cm}
+    {\Large Maxence Lagourgue, Celian Allouache, Amine Mahmoudy, Yassine El Mansouri,  Thomas Ceolin\par}
+    \vspace{5cm}
+    \vfill
+    \noindent
+    \begin{minipage}[t]{0.5\textwidth}
+        Supervised by M.Kandi
+    \end{minipage}%
+    \begin{minipage}[t]{0.5\textwidth}
+        \raggedleft
+        {\large \today}
+    \end{minipage}
+\end{titlepage}
+
+%%%%%%%%%% SOMMAIRE %%%%%%%%%%
+\tableofcontents
+\clearpage
+
+%%%%%%%%%% INTRODUCTION %%%%%%%%%%
+\chapter*{Preamble}
+\addcontentsline{toc}{chapter}{Preamble}
+
+
+\end{document}
