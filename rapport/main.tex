@@ -1,0 +1,445 @@
+\documentclass[a4paper,11pt]{report}
+
+%%%%%%%%%% PACKAGES ESSENTIELS %%%%%%%%%%
+\usepackage[utf8]{inputenc}   
+\usepackage[T1]{fontenc}      
+\usepackage[french]{babel}    
+\usepackage{graphicx}         
+\usepackage{lmodern}          
+\usepackage{float}
+\usepackage{xcolor}           
+\usepackage{geometry}         
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{colortbl}        
+
+%%%%%%%%%% PARAMÈTRES DE PAGE %%%%%%%%%%
+\geometry{top=1.5cm,bottom=1.5cm,left=2cm,right=2cm}
+\setlist{nosep,left=0pt}
+\setlength{\parskip}{0.4em}
+\setlength{\parindent}{1em}
+
+%%%%%%%%%% ESPACEMENT DES TITRES %%%%%%%%%%
+\usepackage{titlesec}
+\titlespacing*{\chapter}{0pt}{-5pt}{5pt}
+\titlespacing*{\section}{0pt}{6pt}{3pt}
+\titlespacing*{\subsection}{0pt}{4pt}{2pt}
+
+%%%%%%%%%% COULEURS & LIENS %%%%%%%%%%
+\definecolor{headerblue}{RGB}{52,152,219}
+\definecolor{rowgray}{RGB}{245,245,245}
+\definecolor{darkgray}{RGB}{60,60,60}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=headerblue,
+    urlcolor=headerblue,
+    citecolor=headerblue
+}
+
+%%%%%%%%%% STYLE DES CHAPITRES %%%%%%%%%%
+\titleformat{\chapter}[hang]{\bfseries\huge\color{headerblue}}{\thechapter.}{0.5em}{}
+\titleformat{\section}[hang]{\bfseries\Large\color{headerblue}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}[hang]{\bfseries\color{darkgray}}{\thesubsection.}{0.5em}{}
+
+%%%%%%%%%% DÉBUT DU DOCUMENT %%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%% PAGE DE GARDE %%%%%%%%%%
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    \rule{\textwidth}{1pt}\par
+    \vspace{0.4cm}
+    {\Large \textsc{I.U.T. A – Département Informatique – Semestre 5}\par}
+    \vspace{2cm}
+    {\Huge\bfseries S5.B.01 – Déploiement d’une infrastructure réseau\par}
+    \vspace{1cm}
+    \includegraphics[width=0.3\textwidth]{image/logo-UT-site.png}\par
+    \vspace{2cm}
+    {\Large Maxence Lagourgue, Celian Allouache, Amine Mahmoudy, Yassine El Mansouri, Thomas Ceolin\par}
+    \vfill
+    \noindent
+    \begin{minipage}[t]{0.5\textwidth}
+        \raggedright
+        \textbf{Supervision :} M. Kandi
+    \end{minipage}%
+    \begin{minipage}[t]{0.5\textwidth}
+        \raggedleft
+        {\large \today}
+    \end{minipage}
+    \rule{\textwidth}{1pt}
+\end{titlepage}
+
+%%%%%%%%%% SOMMAIRE %%%%%%%%%%
+\tableofcontents
+\clearpage
+
+%%%%%%%%%% PRÉAMBULE %%%%%%%%%%
+\chapter*{Préambule}
+\addcontentsline{toc}{chapter}{Préambule}
+
+Ce rapport présente le déroulement complet du projet \textbf{S5.B.01 – Déploiement d’une infrastructure réseau}, réalisé dans le cadre du cinquième semestre du BUT Informatique.  
+Il retrace, semaine après semaine, les différentes phases d’implémentation, les difficultés rencontrées, ainsi que les solutions techniques mises en œuvre pour assurer la stabilité et la performance du réseau conçu.
+
+L’objectif principal de ce projet est de permettre aux étudiants de mettre en pratique leurs connaissances en administration et configuration d’infrastructures réseau à travers une approche concrète et collaborative.  
+Chaque membre du groupe a participé activement à la mise en place du matériel, au câblage, à la configuration des protocoles de routage (OSPF, BGP) et à l’intégration des services essentiels (DHCP, VLAN, adressage IP).
+
+Afin d’assurer une organisation claire et un suivi efficace du travail, nous avons utilisé un tableau \textbf{Trello} tout au long du projet.  
+Cet outil de gestion de tâches nous a permis :
+\begin{itemize}
+    \item de planifier les différentes étapes de réalisation du projet ;
+    \item d’attribuer à chaque membre du groupe des tâches précises selon ses compétences ;
+    \item de suivre la progression du travail en temps réel ;
+    \item et de garantir une répartition équilibrée des responsabilités.
+\end{itemize}
+
+Grâce à cette méthode, la coordination entre les membres de l’équipe s’est avérée fluide et productive, favorisant une communication constante et un avancement régulier du projet.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{image/Trello.png}
+    \caption{Exemple de tableau Trello utilisé pour la répartition et le suivi des tâches}
+\end{figure}
+
+Ce préambule introduit également la structure du présent rapport :
+\begin{itemize}
+    \item Les \textbf{phases d’implémentation}, décrivant les tâches réalisées chaque semaine et les choix techniques retenus.
+    \item Les \textbf{analyses de configuration}, expliquant les étapes de déploiement, de test et de correction des erreurs.
+    \item Les \textbf{résultats obtenus}, mettant en avant les réussites et les apprentissages techniques issus du projet.
+\end{itemize}
+
+Enfin, ce document constitue une trace complète du travail d’équipe réalisé, illustrant notre progression, notre organisation et notre montée en compétence tout au long du projet de déploiement réseau.
+\clearpage
+
+%%%%%%%%%% CHAPITRE 6 – PHASE D’IMPLEMENTATION %%%%%%%%%%
+\chapter{Phase d’implémentation – Semaine 1 (13 → 19 octobre 2025)}
+
+\section{Objectif de la semaine}
+Cette première semaine avait pour objectif de poser les bases de notre projet réseau. Nous devions préparer l’environnement, déployer l’infrastructure initiale et amorcer la configuration du routage dynamique.  
+
+Les principaux objectifs étaient :
+\begin{itemize}
+    \item Prendre connaissance du plan de travail et inventorier le matériel disponible (routeurs, switches, câbles).  
+    \item Réaliser le câblage physique et logique du réseau.  
+    \item Définir le plan d’adressage IP pour chaque équipement.  
+    \item Initier la configuration du routage dynamique avec le protocole OSPF.  
+\end{itemize}
+
+\textbf{Résultat attendu :} un réseau initial stable, câblage organisé, plan d’adressage défini et routage dynamique en cours de mise en place.
+
+\section{Découverte du matériel et contraintes}
+Dès le début, nous avons inventorié l’ensemble du matériel afin d’adapter notre architecture aux ressources disponibles.  
+Une contrainte majeure est rapidement apparue : \textbf{notre groupe disposait d’un routeur avec une seule interface réseau}, alors que les autres groupes avaient plusieurs interfaces.  
+
+Cette limitation a directement influencé notre topologie, réduisant la possibilité de créer des VLANs multiples sur ce routeur et nécessitant des configurations spécifiques pour maintenir la connectivité entre tous les sous-réseaux.  
+Cette situation a renforcé l’importance d’une planification rigoureuse avant toute configuration.
+
+\section{Première tentative de câblage}
+Nous avons d’abord réalisé un câblage complet reliant tous les routeurs et switches.  
+Cependant, cette première version manquait de clarté et risquait de provoquer des erreurs lors de la manipulation.  
+
+Pour améliorer la lisibilité et la propreté du montage, nous avons décidé de tout recommencer :
+\begin{itemize}
+    \item Élaboration d’un plan de câblage précis.  
+    \item Étiquetage systématique de chaque câble selon sa fonction.  
+    \item Réorganisation physique des équipements pour un rendu propre et professionnel.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image/cablagedesordre.png}
+        \caption{Premier câblage – désorganisé}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image/cablageRang.png}
+        \caption{Câblage final – organisé et étiqueté}
+    \end{minipage}
+\end{figure}
+
+\clearpage
+\section{Problèmes rencontrés et refonte de la topologie}
+Lors de la configuration réseau, plusieurs erreurs ont été identifiées :
+\begin{itemize}
+    \item Confusion entre les VLAN destinés aux membres et ceux destinés aux adhérents.  
+    \item Mauvaise attribution des adresses IP et des passerelles.  
+    \item Topologie initiale incorrecte, rendant certains liens inaccessibles.  
+\end{itemize}
+
+Ces problèmes étaient principalement liés à une mauvaise anticipation du comportement des routeurs, combinée à la contrainte de l’unique interface sur notre routeur.  
+Nous avons donc repensé entièrement la topologie, ajusté les liens WAN et adapté la configuration des VLANs pour correspondre à la réalité du matériel.  
+
+Cette refonte a engendré une perte de \textbf{deux jours de travail}, mais elle a été cruciale pour stabiliser le réseau et mieux comprendre nos erreurs.  
+Nous avons ensuite redoublé d’efforts pour rattraper le retard et terminer la configuration des éléments essentiels.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{image/shématopologiereseauxadressageip.png}
+    \caption{Nouvelle topologie du réseau après refonte et ajustement des VLANs}
+\end{figure}
+
+\section{Configuration réseau : IPv4, IPv6, VLAN et passerelles}
+Une fois la topologie stabilisée, nous avons repris la configuration complète du réseau :  
+\begin{itemize}
+    \item Attribution des adresses \textbf{IPv4} sur toutes les interfaces.  
+    \item Mise en place des \textbf{VLANs} selon la nouvelle topologie.  
+    \item Définition des \textbf{passerelles} pour chaque sous-réseau.  
+    \item Début de configuration des adresses \textbf{IPv6} pour assurer la compatibilité dual-stack.  
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\rowcolors{2}{rowgray}{white}
+\begin{tabularx}{\textwidth}{@{}lXlX@{}}
+\toprule
+\rowcolor{headerblue}
+\color{white}\textbf{Routeur} & \color{white}\textbf{Interface / VLAN} & \color{white}\textbf{Adresse IPv4 / Masque} & \color{white}\textbf{IPv6 ULA} \\
+\midrule
+\textbf{R1} & GE8 (WAN) / — & 10.0.20.1 /27 & fd82:f0db:20::2002:a00:1400:1 \\
+            & — & 10.0.21.1 /27 & fd82:f0db:21::2002:a00:1500:1 \\
+            & GE0 / VLAN2 & 192.168.100.1 /30 & fd82:f0db:2::2002:c0a8:6400:1 \\
+\midrule
+\textbf{R2} & GE0 / VLAN2 & 192.168.100.2 /30 & fd82:f0db:2::2002:c0a8:6400:2 \\
+            & GE4 / VLAN4 & 192.168.110.2 /30 & FD00:110::2/64 \\
+            & GE8 (WAN) / — & 192.168.120.2 /30 & FD00:120::2/64 \\
+\midrule
+\textbf{R3} & GE0 / VLAN2 & 192.168.130.2 /30 & FD00:130::2/64 \\
+            & GE4 / VLAN4 & 192.168.110.2 /30 & FD00:110::2/64 \\
+\midrule
+\textbf{R4} & GE0 / VLAN2 & 192.168.130.1 /30 & FD00:130::1/64 \\
+            & GE4 / VLAN4 & 192.168.140.2 /30 & FD00:140::2/64 \\
+            & GE8 (WAN) / — & 192.168.120.1 /30 & FD00:120::1/64 \\
+\midrule
+\textbf{R5} & GE4 / VLAN4 & 192.168.140.1 /30 & FD00:140::1/64 \\
+            & GE5 / VLAN5 & 172.0.2.1 /16 & FD00:2::1 \\
+            & GE8 (WAN) / — & 10.0.10.1 /27 & fd82:f0db:10::2002:a00:a00:1 \\
+            & — / — & 10.0.11.1 /28 & fd82:f0db:11::2002:a00:b00:1 \\
+            & — / VLAN2 & 192.168.150.1 /30 & FD00:150::1 \\
+\midrule
+\textbf{R6} & FE0/1 / — & 172.0.2.2 /16 & FD00:2::2/64 \\
+            & FE0/0 / VLAN30 & 10.0.30.1 /28 & fd82:f0db:30::2002:a00:1e00:1 \\
+            & FE0/0 / VLAN31 & 10.0.31.1 /28 & fd82:f0db:31::2002:a00:1f00:1 \\
+            & — / — & 192.168.150.2 /30 & FD00:150::2 \\
+            & — / — & 192.168.150.3 /30 & — \\
+            & — / — & 192.168.150.4 /30 & — \\
+\bottomrule
+\end{tabularx}
+\caption{Plan d’adressage IP simplifié avec VLANs et IPv6 pour chaque routeur}
+\end{table}
+
+\section{Configuration du protocole OSPF}
+Après avoir configuré les adresses IP et les VLAN, nous avons initié le routage dynamique avec le protocole \textbf{OSPF}, garantissant la communication entre tous les sous-réseaux et simplifiant l’extension future du réseau.  
+
+\subsection*{Exemple de configuration sur le Routeur 2}
+\begin{enumerate}
+    \item \textbf{Préparation du routeur :}
+\begin{verbatim}
+enable
+conf t
+hostname R2
+\end{verbatim}
+
+    \item \textbf{Création des VLANs et activation IPv6 :}
+\begin{verbatim}
+vlan database
+vlan 2,4
+exit
+conf t
+ipv6 unicast-routing
+\end{verbatim}
+
+    \item \textbf{Configuration des interfaces VLAN :}
+\begin{verbatim}
+interface vlan 2
+ip address 192.168.100.2 255.255.255.252
+ipv6 address fd82:f0db:2::2002:c0a8:6400:2/64
+no shutdown
+exit
+
+interface vlan 4
+ip address 192.168.110.1 255.255.255.252
+ipv6 address FD00:110::1/64
+no shutdown
+exit
+\end{verbatim}
+
+    \item \textbf{Assignation des VLAN aux interfaces physiques :}
+\begin{verbatim}
+interface GigabitEthernet0
+switchport mode access
+switchport access vlan 2
+exit
+
+interface GigabitEthernet4
+switchport mode access
+switchport access vlan 4
+exit
+\end{verbatim}
+
+    \item \textbf{Configuration d’une interface supplémentaire et route par défaut :}
+\begin{verbatim}
+interface GigabitEthernet8
+ip address 192.168.120.1 255.255.255.252
+ipv6 address FD00:120::1/64
+no shutdown
+exit
+
+ip route 0.0.0.0 0.0.0.0 192.168.110.2
+\end{verbatim}
+
+    \item \textbf{Activation d’OSPF pour IPv4 et IPv6 :}
+\begin{verbatim}
+router ospf 2
+network 192.168.110.0 0.0.0.255 area 0
+network 192.168.120.0 0.0.0.255 area 0
+network 192.168.100.0 0.0.0.255 area 1
+
+ipv6 router ospf 3
+router-id 2.2.2.2
+\end{verbatim}
+\end{enumerate}
+
+\section{Bilan de la semaine}
+Cette première semaine a été riche en apprentissages et en ajustements :  
+\begin{itemize}
+    \item \textbf{Points positifs :} organisation du matériel, câblage finalisé, compréhension de la topologie, mise en pratique du protocole OSPF.  
+    \item \textbf{Difficultés rencontrées :} contraintes matérielles, topologie initiale incorrecte, VLAN inversés, attribution IP.  
+    \item \textbf{Compétences développées :} routage dynamique OSPF, gestion VLAN et sous-réseaux, planification et correction de topologie.
+\end{itemize}
+
+---
+
+\chapter{Phase d’implémentation – Semaine 2 (20 → 26 octobre 2025)}
+
+\section{Objectif de la semaine}
+Cette semaine a été entièrement consacrée à la **finalisation du routage dynamique, du DHCP IPv4 et du déploiement initial du site web**, tout en corrigeant les problèmes rencontrés dans la topologie et les configurations.  
+
+\textbf{Résultat attendu :} un réseau stable, avec OSPF et BGP fonctionnels, DHCP opérationnel, NAT configuré et site interne amorcé.
+
+Les principaux objectifs étaient :
+\begin{itemize}
+    \item Finaliser le protocole **OSPF** (IPv4 et IPv6) sur l’ensemble des routeurs.  
+    \item Configurer le routage inter-domaine **BGP** entre R5 et R6.  
+    \item Déployer et vérifier le service **DHCP IPv4** pour tous les VLAN.  
+    \item Configurer le **NAT** sur R5 pour le serveur.  
+    \item Commencer le **déploiement du site web** via Docker Compose.  
+    \item Corriger les **bugs liés au routage et aux masques** (/28 remplacé par /27 pour tous les VLANs).  
+    \item Vérifier la **connectivité complète** entre tous les sous-réseaux.
+\end{itemize}
+
+\section{Configuration et finalisation du routage dynamique}
+\subsection{OSPF multi-area (IPv4 et IPv6)}
+Le réseau a été structuré en architecture **multi-area** pour optimiser la propagation des routes et limiter le trafic sur le backbone central :  
+\begin{itemize}
+    \item \textbf{Area 0} : backbone central (R1, R2, R3, R4).  
+    \item \textbf{Area 1 et Area 2} : zones secondaires correspondant aux VLAN périphériques.  
+\end{itemize}
+
+Les ABR ont été identifiés pour relier les zones secondaires à l’Area 0 et chaque routeur annonce ses sous-réseaux dans la zone appropriée.
+
+\subsubsection*{Exemple de configuration sur R3}
+\begin{lstlisting}[language=Python]
+interface Vlan2
+ ip address 192.168.130.1 255.255.255.224  # /27
+ ipv6 address FD00:130::1/64
+ ipv6 ospf 2 area 0
+
+interface Vlan4
+ ip address 192.168.110.2 255.255.255.224  # /27
+ ipv6 address FD00:110::2/64
+ ipv6 ospf 2 area 0
+
+router ospf 2
+ network 192.168.110.0 0.0.0.31 area 0
+ network 192.168.130.0 0.0.0.31 area 0
+\end{lstlisting}
+
+\subsection{Problèmes rencontrés et solutions}
+\begin{itemize}
+    \item Chevauchement et insuffisance des adresses pour les VLAN (/28 trop petit → passage à /27).  
+    \item Routes manquantes ou mal propagées.  
+    \item Bugs sur certaines configurations de routage et NAT côté serveur.
+\end{itemize}
+
+\textbf{Solutions apportées :} ajustement des masques à /27 pour tous les VLANs, correction des configurations ABR et des interfaces, vérification du routage côté serveur.
+
+\subsection{Configuration du BGP inter-domaine}
+Pour permettre le routage entre deux AS distincts :  
+\begin{itemize}
+    \item R5 : AS 5  
+    \item R6 : AS 6  
+\end{itemize}
+
+\subsubsection*{Configuration sur R5}
+\begin{lstlisting}[language=Python]
+router bgp 5
+ bgp log-neighbor-changes
+ network 172.0.0.0
+ neighbor 172.0.2.2 remote-as 6
+\end{lstlisting}
+
+Les tests via \texttt{show ip bgp summary} et \texttt{show ip route} ont confirmé la propagation correcte des préfixes entre R5 et R6.
+
+\section{Déploiement et configuration des services essentiels}
+\subsection{DHCP IPv4}
+Le serveur DHCP a été configuré pour chaque VLAN avec :
+\begin{itemize}
+    \item Création des pools d’adresses IPv4 (/27).  
+    \item Définition des options DHCP : passerelle et DNS interne.  
+    \item Vérification sur plusieurs clients pour confirmer l’attribution correcte des adresses.
+\end{itemize}
+
+\subsection{NAT sur R5}
+Le NAT a été configuré pour permettre l’accès externe au serveur :
+\begin{itemize}
+    \item Traduction d’adresses privées vers une adresse publique.  
+    \item Tests de connectivité et vérification du bon fonctionnement pour le serveur.
+\end{itemize}
+
+\subsection{Routage et corrections côté serveur}
+Le serveur a été configuré avec des routes statiques et dynamiques pour permettre :
+\begin{itemize}
+    \item La communication avec tous les VLANs.  
+    \item La compatibilité avec le NAT et BGP.  
+    \item La correction des bugs détectés lors des premiers tests.
+\end{itemize}
+
+\subsection{Début du déploiement du site web}
+Pour amorcer la mise en ligne du site interne :
+\begin{itemize}
+    \item Création des containers via \textbf{Docker Compose}.  
+    \item Test de l’accès réseau aux containers depuis les VLANs.  
+    \item Projet \textbf{Nailloux manquant}, bloquant la finalisation complète du déploiement.
+\end{itemize}
+
+\subsection{Tests de connectivité}
+\begin{itemize}
+    \item \texttt{ping} entre tous les routeurs et clients.  
+    \item Vérification des tables de routage OSPF et BGP.  
+    \item Test de l’attribution DHCP et du NAT pour le serveur.  
+    \item Validation que les VLANs communiquent correctement entre eux.
+\end{itemize}
+
+\section{Bilan de la semaine}
+Cette semaine a permis de consolider le réseau et d’avancer sur le déploiement du site :  
+\begin{itemize}
+    \item OSPF multi-area fonctionnel en IPv4 et IPv6.  
+    \item BGP inter-domaine opérationnel entre R5 et R6.  
+    \item DHCP IPv4 entièrement déployé et fonctionnel.  
+    \item NAT sur R5 permettant l’accès au serveur.  
+    \item Corrections des bugs de routage et ajustement des masques (/27).  
+    \item Début du déploiement du site web via Docker Compose.  
+    \item Projet Nailloux manquant pour la finalisation complète.
+\end{itemize}
+
+Le réseau est désormais \textbf{fonctionnel, stable et prêt pour la suite du projet}, avec routage dynamique, attribution d’adresses DHCP, NAT opérationnel et démarrage du site interne.
+
+
+
+\end{document}
