@@ -1,0 +1,276 @@
+Current configuration : 6208 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW4
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+!
+no aaa new-model
+switch 2 provision ws-c3750v2-48ps
+system mtu routing 1500
+!
+!
+!
+!         
+crypto pki trustpoint TP-self-signed-3350394112
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3350394112
+ revocation-check none
+ rsakeypair TP-self-signed-3350394112
+!
+!
+crypto pki certificate chain TP-self-signed-3350394112
+ certificate self-signed 01
+  3082023C 308201A5 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33333530 33393431 3132301E 170D3933 30333031 30303032 
+  34375A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 33353033 
+  39343131 3230819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  81009A2E 7421A878 C1709587 2A569FBD 2855905C 0B9C14A9 7A9F69C0 E2EE5791 
+  DFAC0083 39DC7CE7 C1A0A0C2 9C78D1A2 BA3093F8 EBDCD128 56FBE740 876CB0BE 
+  70DB6D4F AEC18AD4 0AD7A97E 14015F93 D7DC523B A6A9E5E5 87DC5CF8 CDAD6CF6 
+  386DB454 D7DFE2C1 29DBC562 98A87714 DEB93963 D52668A5 AECAD13A 79C80842 
+  155F0203 010001A3 64306230 0F060355 1D130101 FF040530 030101FF 300F0603 
+  551D1104 08300682 04535734 2E301F06 03551D23 04183016 80140950 A312DAAF 
+  925FFFC6 4B507F25 36C4F1CC D24F301D 0603551D 0E041604 140950A3 12DAAF92 
+  5FFFC64B 507F2536 C4F1CCD2 4F300D06 092A8648 86F70D01 01040500 03818100 
+  0BDEE4BF 4FC989D0 381C7012 766FA1D7 DEB17C18 74C11B11 D38F4226 B796789D 
+  2F994A04 4F7098C5 DD44F2C8 94986044 A10E492B EABD54AB 2110F457 48948F2A 
+  D424C933 7F3706E7 279FB6CA 95EAD0F7 B3E1547B 444D5122 E9B87A37 C5F7A936 
+  94B36880 E84541DD DC8C588F 9D487577 D836098A 7BFC8F87 C7569366 DA3B4204
+  quit
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+interface FastEthernet2/0/1
+!
+interface FastEthernet2/0/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet2/0/3
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/4
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/5
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/6
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/7
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/8
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/9
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/10
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/11
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/12
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/13
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/14
+ switchport access vlan 11
+ switchport mode access
+!         
+interface FastEthernet2/0/15
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/16
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/17
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/18
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/19
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/20
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/21
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/22
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/23
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/24
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/25
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/26
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/27
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/28
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/29
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/30
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/31
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/32
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/33
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/34
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/35
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/36
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/37
+ switchport access vlan 11
+ switchport mode access
+!         
+interface FastEthernet2/0/38
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/39
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/40
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/41
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/42
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/43
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/44
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/45
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/46
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/47
+ switchport access vlan 11
+ switchport mode access
+!
+interface FastEthernet2/0/48
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet2/0/1
+!         
+interface GigabitEthernet2/0/2
+!
+interface GigabitEthernet2/0/3
+!
+interface GigabitEthernet2/0/4
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip http server
+ip http secure-server
+!
+!
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end       
