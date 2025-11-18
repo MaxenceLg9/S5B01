@@ -1,0 +1,14 @@
+;
+; BIND data file for yourdomain.com
+;
+$TTL    604800
+@       IN      SOA     intranet.nailloux-club-photo.fr. intranet.nailloux-club-photo.fr. (
+                              3         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      intranet.nailloux-club-photo.fr.
+@       IN      A       192.168.150.3
+@       IN      AAAA    fd00:150::3
