@@ -1,0 +1,28 @@
+acl "trusted" {
+    10.0.0.0/16;
+    ::/0;
+    localhost;
+    localnets;
+};
+
+options {
+    directory "/var/cache/bind";
+
+    recursion yes;
+    allow-query { trusted; };
+    allow-recursion { trusted; };
+
+    forwarders {
+        100.100.100.254;
+        10.192.1.250;
+    };
+
+    dnssec-validation auto;
+
+    listen-on { 192.168.150.2; };
+    listen-on-v6 { fd00:150::2; };
+
+    #listen-on { interface "ens19"; };
+    #listen-on-v6 { interface "ens19"; };
+
+};
