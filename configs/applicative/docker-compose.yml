@@ -1,0 +1,70 @@
+services:
+    nginx:
+        image: nginx:alpine
+        container_name: nailloux-club-nginx
+        restart: unless-stopped
+        ports:
+            - "0.0.0.0:80:80"
+            - "0.0.0.0:443:443"
+            - "[::]:8080"
+            - "[::]:443:443"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./certs:/etc/nginx/ssl/:ro
+            - ./logs/nginx:/var/log/nginx
+            - /:/var/www/html
+            - ./upload:/var/www/html/upload
+        networks:
+            - nailloux-network
+        extra_hosts:
+            - "intranet.nailloux-club-photo.fr:192.168.150.3"
+            - "intranet.nailloux-club-photo.fr:fd00:150::3"
+        depends_on:
+            - app
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            container_name: nailloux-club-app
+        restart: unless-stopped
+        expose:
+            - "80"
+            - "443"
+        environment:
+            - DB_HOST=db
+            - DB_NAME=nailloux
+            - DB_USER=root
+            - DB_PASSWORD=rootpassword
+        volumes:
+            - /:/var/www/html
+            - ./upload:/var/www/html/upload
+        networks:
+            - nailloux-network
+        depends_on:
+            db:
+                condition: service_healthy
+    db:
+        image: mysql:8.0
+        container_name: nailloux-club-db
+        restart: unless-stopped
+        ports:
+            - "127.0.0.1:33060:3306"
+        environment:
+            MYSQL_DATABASE: nailloux
+            MYSQL_ROOT_PASSWORD: rootpassword
+        command: --default-authentication-plugin=mysql_native_password --character-set-server-utf8mb4 --collation-server=utf8mb4_unicode_ci
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+        timeout: 5s
+        retries: 10
+        volumes:
+            - dbdata:/var/lib/mysql
+            - ./nailloux.sql:/docker-entrypoint-initdb.d/nailloux.sql
+        networks:
+            - nailloux-network
+networks:
+  nailloux-network:
+    driver: bridge
+volumes:
+  dbdata:
+    driver: local
