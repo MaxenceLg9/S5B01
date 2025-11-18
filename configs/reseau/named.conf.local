@@ -1,0 +1,4 @@
+zone "intranet.nailloux-club-photo.fr" {
+    type master;
+    file "/etc/bind/zones/db.intranet.nailloux-club-photo.fr"; # zone file path
+};
