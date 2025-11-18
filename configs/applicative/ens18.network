@@ -1,0 +1,9 @@
+[Match]
+Name=ens18
+
+[Network]
+DHCP=yes
+DNSSec=no
+
+[DHCP]
+UseDNS=false
