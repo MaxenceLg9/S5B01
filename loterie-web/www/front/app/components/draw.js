@@ -21,24 +21,37 @@ export const DrawLottery = () => {
 
     const { connectWallet } = useConnectWallet();
 
+    const [result, setResult] = useState(null);
+
     async function handleClick() {
         if (!isConnected) {
             try {
-                const result = await connectWallet();
-                console.log("Wallet connected:", result);
+                const r = await connectWallet();
+                console.log("Wallet connected:", r);
             } catch (err) {
                 console.error("Wallet connection failed:", err);
+                return;
             }
         }
 
-        await call();
+        // Call the contract function
+        const callResult = await call();
+        setResult(callResult);
     }
+
 
     return (
         <div>
             <button className="btn btn-primary" onClick={handleClick}>
                 Tirage aléatoire
             </button>
+
+            {result && (
+                <div style={{ marginTop: "1rem" }}>
+                    <strong>Result:</strong> {result.toString()}
+                </div>
+            )}
         </div>
     );
+
 };

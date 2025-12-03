@@ -3,7 +3,7 @@
 import {promises as fs} from 'fs';
 
 export async function getAddress(){
-    return "0x1129a57fBa00A0485F0a6CEA57Cb7dC52A10850e"
+    return "0x2af959c370889A6c9d0BbD863676acFB2b25ADc8"
 }
 
 export async function loadConfig() {

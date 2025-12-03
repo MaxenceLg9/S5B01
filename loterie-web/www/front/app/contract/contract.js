@@ -16,20 +16,18 @@ export function useFunctionWrite(address, abi, fun, value) {
 
         try {
             if(value == null)
-                await writeContractAsync({
-                    address: address,
-                    abi: abi,
+                return await writeContractAsync({
+                    address,
+                    abi,
                     functionName: fun,
                 })
             else
-                await writeContractAsync({
-                    address: address,
-                    abi: abi,
+                return await writeContractAsync({
+                    address,
+                    abi,
                     functionName: fun,
-                    value: value, // <<<<<< msg.value
+                    value, // <<<<<< msg.value
                 })
-
-            console.log("Transaction sent:", txHash)
         } catch (err) {
             console.error(err)
             console.error("User rejected the transaction")
