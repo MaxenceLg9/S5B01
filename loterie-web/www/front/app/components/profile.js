@@ -1,6 +1,6 @@
 "use client"
 
-import {useAccount, useConnection, useEnsName} from 'wagmi'
+import {useAccount, useEnsName} from 'wagmi'
 
 export function Profile() {
     const { address } = useAccount()
