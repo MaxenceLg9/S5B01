@@ -1,3 +1,4 @@
+'use client'
 import {useDisconnect} from "wagmi";
 
 export const Disconnect = () => {

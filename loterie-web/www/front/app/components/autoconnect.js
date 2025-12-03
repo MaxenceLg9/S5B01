@@ -15,8 +15,8 @@ export function AutoConnectProvider({ children }) {
             const connector = connectors?.[0];
             if (connector) {
                 try {
-                    await connectAsync({ connector });
-                    console.log("Auto-connected wallet");
+                    const result = await connectAsync({ connector });
+                    console.log("Auto-connected wallet", result);
                 } catch (err) {
                     console.warn("Auto-connect failed:", err);
                 }

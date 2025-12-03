@@ -1,21 +1,32 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import {GetContractBalance} from "../contract/contract";
-import { ParticipateContractButton } from "../contract/loterie";
+import {GetContractBalance} from "@/app/components/balance";
+import { ParticipateContractButton } from "@/app/components/participate";
+import { DrawLottery } from "@/app/components/draw";
 import { Disconnect } from "@/app/components/disconnect";
-import {loadAbi, loadConfig} from "@/app/contract/config";
+import {useAccount} from "wagmi";
+import {GetSolde} from "@/app/components/getSolde";
 
 export const ContractButton = () => {
-    const [abi, setConfig] = useState(null);
+    const { isConnected } = useAccount();
 
-    useEffect(() => {
-        loadAbi().then(setConfig);
-    }, []);
     return (
         <div>
+            { isConnected ? (
+                <div>
+                    Connecté
+                </div>
+            ) : (
+                <div>
+                    Veuillez-vous connectez
+                </div>
+            )
+            }
             <ParticipateContractButton />
-            <GetContractBalance address={"0xdFb060cdAcfBEb91B3bAAB470Aa095a94C2f0931"} fun={"price"} abi={abi}></GetContractBalance>
+            <DrawLottery />
+            <GetContractBalance></GetContractBalance>
+            <GetSolde/>
             <Disconnect/>
         </div>
     );

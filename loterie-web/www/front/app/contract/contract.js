@@ -1,9 +1,8 @@
 'use client'
 
-import { useReadContract, useWriteContract } from "wagmi";
-import { formatUnits } from "ethers";
+import { useWriteContract } from "wagmi";
 
-export function useParticipate(address,abi,fun,value) {
+export function useFunctionWrite(address, abi, fun, value) {
     const {
         writeContractAsync,
         isPending,
@@ -12,55 +11,36 @@ export function useParticipate(address,abi,fun,value) {
         data: txHash,
     } = useWriteContract()
 
-    async function participate() {
-        console.log("Calling participate() logic…")
+    async function call() {
+        console.log("Calling " + fun)
 
         try {
-
-            await writeContractAsync({
-                address: address,
-                abi: abi,
-                functionName: fun,
-                value: value, // <<<<<< msg.value
-            })
+            if(value == null)
+                await writeContractAsync({
+                    address: address,
+                    abi: abi,
+                    functionName: fun,
+                })
+            else
+                await writeContractAsync({
+                    address: address,
+                    abi: abi,
+                    functionName: fun,
+                    value: value, // <<<<<< msg.value
+                })
 
             console.log("Transaction sent:", txHash)
         } catch (err) {
+            console.error(err)
             console.error("User rejected the transaction")
         }
     }
 
     return {
-        participate,
+        call,
         isPending,
         isError,
         error,
         txHash,
     }
-}
-
-
-export function GetContractBalance({address,abi,fun}) {
-
-    console.log(abi);
-    const {data, error, isPending} = useReadContract({
-        address: address,
-        abi,
-        functionName: fun,
-    });
-
-    console.log(data);
-    if (isPending) return <div>Loading...</div>
-
-    if (error)
-        return (
-            <div>
-                Error: Connectez-vous
-            </div>
-        )
-    return (
-        <div>
-            Price: {data ? formatUnits(data, 18) : "-"} ethers
-        </div>
-    )
 }
