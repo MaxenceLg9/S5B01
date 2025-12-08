@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  web:
+    container_name: web-loterie
+    image: php:8.2-apache
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./www:/var/www/html   # Your Page web app source
+      - ./conf/apache.conf:/etc/apache2/sites-available/000-default.conf
+    depends_on:
+      - db
+    networks:
+      - intra_net
+
+  db:
+    container_name: db-loterie
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_admin
+      MYSQL_DATABASE: loterie_db
+      MYSQL_USER: loterie
+      MYSQL_PASSWORD: loterie
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - intra_net
+
+  phpadmin:
+    container_name: phpmyadmin-loterie
+    image: phpmyadmin:latest
+    restart: always
+    environment:
+      PMA_HOST: db-loterie
+      MYSQL_ROOT_PASSWORD: root_admin
+    ports:
+      - "8080:80"   # Access phpMyAdmin via localhost:8080
+    depends_on:
+      - db
+    networks:
+      - intra_net
+
+volumes:
+  db_data:
+
+networks:
+  intra_net:
