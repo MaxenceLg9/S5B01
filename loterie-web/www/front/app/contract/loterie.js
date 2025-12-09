@@ -33,6 +33,12 @@ export function useParticipate(loterie){
     return useFunctionWrite(address,abi,"participate", 2n * 10n ** 16n, [loterie]);
 }
 
+export function useAddLottery(fee, name){
+    const {abi, address} = useGetConfig();
+
+    return useFunctionWrite(address,abi,"addLoterie",null, [fee,name]);
+}
+
 
 
 export function useGetSolde(loterie){

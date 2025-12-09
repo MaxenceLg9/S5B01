@@ -1,23 +1,27 @@
-import {useAccount, useConnect} from "wagmi";
-import {useEffect} from "react";
-import {useGetLoteries} from "@/app/contract/loterie";
+'use client'
+
+import { useGetLoteries } from "@/app/contract/loterie"
+import { useQueryClient } from '@tanstack/react-query'
+import { useEffect } from "react"
 
 export const Loteries = () => {
-    const { data, isLoading, error } = useGetLoteries();
+    const queryClient = useQueryClient()
+    const { data, refetch, isFetching } = useGetLoteries({
+        queryKey: ['getLoteries'] // important for invalidation
+    })
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error</div>;
-    if (!data) return null;
+    if (isFetching) return <div>Loading...</div>
+    if (!data) return <div>No lotteries</div>
 
-    const [addresses, names] = data;
+    const [addresses, names] = data
 
     return (
         <ul>
             {addresses.map((addr, i) => (
                 <li key={addr}>
-                    <strong>{names[i]}</strong> — {addr}
+                    {names[i]} - {addr}
                 </li>
             ))}
         </ul>
-    );
-};
+    )
+}
