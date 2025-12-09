@@ -1,3 +1,5 @@
+'use client'
+import {Loteries} from "@/app/components/loteries";
 
 
 export default function Home() {
@@ -6,6 +8,7 @@ export default function Home() {
             <h1>
                 Loteries disponibles
             </h1>
+            <Loteries />
         </div>
     );
 }
