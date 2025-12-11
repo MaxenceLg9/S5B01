@@ -21,7 +21,7 @@ export const ContractButton = () => {
                 </div>
             ) : (
                 <div>
-                    Veuillez-vous connectez
+                    Veuillez vous connecter
                 </div>
             )
             }

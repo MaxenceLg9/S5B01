@@ -1,0 +1,56 @@
+.btnDisconnect {
+    padding: 0.7rem 1.5rem;
+    background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btnDisconnect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.btnDisconnect:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(236, 72, 153, 0.4);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btnDisconnect:hover::before {
+    left: 100%;
+}
+
+.btnDisconnect:active {
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .btnDisconnect {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .btnDisconnect {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+}
