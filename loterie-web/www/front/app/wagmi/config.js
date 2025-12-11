@@ -13,9 +13,6 @@ export const config = createConfig({
         }),
     ],
     transports: {
-        [mainnet.id]: http("https://mainnet.infura.io/v3/713df48955dd494984810e5642680efa"),
-        [linea.id]: http(),
-        [lineaSepolia.id]: http(),
         [sepolia.id]: http("https://sepolia.infura.io/v3/713df48955dd494984810e5642680efa"),
     },
 });
