@@ -7,11 +7,6 @@ import { Disconnect } from "@/app/components/loterie/disconnect"
 import styles from './page.module.css'
 
 export default function Home() {
-    const [refresh, setRefresh] = useState(0)
-
-    const handleAdded = () => {
-        setRefresh(prev => prev + 1)
-    }
 
     return (
         <div className={styles.container}>
@@ -45,9 +40,6 @@ export default function Home() {
                     <section id="loteries" className={styles.lotariesSection}>
                         <div className={styles.sectionHeader}>
                             <h2>Mes Loteries</h2>
-                            <span className={styles.refreshButton} onClick={() => setRefresh(prev => prev + 1)}>
-                                ↻ Rafraîchir
-                            </span>
                         </div>
                         <Loteries/>
                     </section>
