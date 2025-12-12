@@ -33,7 +33,7 @@ export default function Home() {
                     <section id="ajouter" className={styles.addSection}>
                         <div className={styles.sectionCard}>
                             <h2>Ajouter une Nouvelle Loterie</h2>
-                            <AddLottery onAdded={handleAdded} />
+                            <AddLottery />
                         </div>
                     </section>
 
