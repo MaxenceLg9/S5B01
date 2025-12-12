@@ -64,7 +64,7 @@ export default function Home() {
             </main>
 
             <footer className={styles.footer}>
-                <p>&copy; 2025 LoteriePlus | Groupe 3 | Iut Paul Sabatier. Tous droits réservés.</p>
+                <p>&copy; 2025   LoteriePlus | Groupe 3 | Iut Paul Sabatier. Tous droits réservés.</p>
             </footer>
         </div>
     )
