@@ -11,16 +11,10 @@ import {useParams} from "next/navigation";
 export const ContractButton = () => {
     const { address } = useParams();
     const { isConnected } = useAccount();
+    const name = "Undefined";
 
     return (
         <div>
-            {address}
-
-            <ParticipateContractButton loterie={address} />
-            <DrawLottery loterie={address} />
-
-
-            <Disconnect/>
             <div style={{ maxWidth: '600px', margin: '0 auto' }}>
                 {/* Header */}
                 <div style={{ marginBottom: '40px' }}>
@@ -34,6 +28,10 @@ export const ContractButton = () => {
                 <div style={{ background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%)', border: '1px solid #334155', borderRadius: '16px', padding: '24px', marginBottom: '24px', backdropFilter: 'blur(10px)' }}>
                     <div style={{ marginBottom: '20px' }}>
                         <p style={{ fontSize: '12px', color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Adresse du Contrat</p>
+                        <p style={{ fontSize: '12px', color: '#e2e8f0', fontFamily: 'monospace', wordBreak: 'break-all', backgroundColor: '#0f172a', padding: '12px', borderRadius: '8px' }}>{address}</p>
+                    </div>
+                    <div style={{ marginBottom: '20px' }}>
+                        <p style={{ fontSize: '12px', color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Nom du Contrat</p>
                         <p style={{ fontSize: '12px', color: '#e2e8f0', fontFamily: 'monospace', wordBreak: 'break-all', backgroundColor: '#0f172a', padding: '12px', borderRadius: '8px' }}>{address}</p>
                     </div>
                 </div>
@@ -66,6 +64,12 @@ export const ContractButton = () => {
                 <div style={{ background: 'rgba(100, 116, 139, 0.1)', border: '1px solid #475569', borderRadius: '12px', padding: '16px', textAlign: 'center' }}>
                     <p style={{ fontSize: '12px', color: '#cbd5e1', margin: '0' }}>Assurez-vous d'avoir suffisamment d'ETH avant de participer</p>
                 </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '24px' }}>
+                    <ParticipateContractButton loterie={address} />
+                    <DrawLottery loterie={address} />
+                    <Disconnect/>
+                </div>
+
             </div>
         </div>
     );
