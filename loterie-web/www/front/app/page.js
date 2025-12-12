@@ -58,7 +58,7 @@ export default function Home() {
                                 ↻ Rafraîchir
                             </span>
                         </div>
-                        <Loteries key={refresh} />
+                        <Loteries/>
                     </section>
                 </div>
             </main>
