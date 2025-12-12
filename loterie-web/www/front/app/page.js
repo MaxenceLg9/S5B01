@@ -21,16 +21,7 @@ export default function Home() {
                         <i className="fas fa-ticket-alt"></i>
                         <span>LoteriePlus</span>
                     </div>
-                    <nav className={styles.navbar}>
-                        <a href="#loteries">
-                            <i className="fas fa-list"></i>
-                            Loteries
-                        </a>
-                        <a href="#ajouter">
-                            <i className="fas fa-plus-circle"></i>
-                            Ajouter
-                        </a>
-                    </nav>
+
                     <Disconnect />
                 </div>
             </header>
